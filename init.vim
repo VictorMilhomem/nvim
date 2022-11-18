@@ -9,9 +9,10 @@ set softtabstop=4           " see multiple spaces as tabstops so <BS> does the r
 set expandtab               " converts tabs to white space
 set shiftwidth=4            " width for autoindents
 set autoindent              " indent a new line the same amount as the line just typed
-set number                  " add line numbers
+set relativenumber          " add line numbers
+set nu
 set wildmode=longest,list   " get bash-like tab completions
-set cc=80                  " set an 80 column border for good coding style
+set cc=90                  " set an 80 column border for good coding style
 filetype plugin indent on   "allow auto-indenting depending on file type
 syntax on                   " syntax highlighting
 set mouse=a                 " enable mouse click
@@ -20,9 +21,21 @@ filetype plugin on
 set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 " set spell                 " enable spell check (may need to download language package)
-" set noswapfile            " disable creating swap file
-" set backupdir=~/.cache/vim " Directory to store backup files.
-"
+set noswapfile
+set nobackup 
+set undodir=~/.cache/vim  " Directory to store backup files.
+set undofile
+set hidden
+set nowrap                  " nowrap lines
+set noerrorbells
+set scrolloff=8
+set signcolumn=yes
+set cmdheight=2
+
+" less delay
+set updatetime=50           " default 400
+
+
 call plug#begin("~/.vim/plugged")
  " Plugin Section
  Plug 'dracula/vim'
@@ -37,7 +50,7 @@ call plug#begin("~/.vim/plugged")
  Plug 'yuezk/vim-js'
  Plug 'maxmellon/vim-jsx-pretty'
  Plug 'HerringtonDarkholme/yats.vim'
- " or Plug 'leafgarland/typescript-vim'
+" or Plug 'leafgarland/typescript-vim'
  Plug 'maxmellon/vim-jsx-pretty'
  Plug 'jiangmiao/auto-pairs'
 call plug#end()
@@ -52,18 +65,12 @@ colorscheme dracula " open new split panes to right and below
 set splitright
 set splitbelow
 
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-
+" autocomplete using shift+tab
 inoremap <silent><expr> <S-TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<S-TAB>" :
       \ coc#refresh()
-inoremap <expr><S-b> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
 
 " move line or visually selected block - alt+j/k
 inoremap <A-j> <Esc>:m .+1<CR>==gi
@@ -87,7 +94,7 @@ let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
+let g:NERDTreeWinSize = 30
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,*node_modules/
 nnoremap <silent> <C-f> :NERDTreeFind<CR>
 nnoremap <silent> <C-m> :NERDTreeToggle<CR>
