@@ -38,6 +38,7 @@ set updatetime=50           " default 400
 
 call plug#begin("~/.vim/plugged")
  " Plugin Section
+ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
  Plug 'dracula/vim'
  Plug 'ryanoasis/vim-devicons'
  Plug 'honza/vim-snippets'
@@ -64,12 +65,13 @@ colorscheme dracula " open new split panes to right and below
 set splitright
 set splitbelow
 
+
+
 " autocomplete using shift+tab
-inoremap <silent><expr> <TAB>
+inoremap <silent><expr> <S-TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
+      \ CheckBackspace() ? "\<S-Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -103,13 +105,17 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,*node_modules/
 nnoremap <silent> <C-f> :NERDTreeFind<CR>
 nnoremap <silent> <C-m> :NERDTreeToggle<CR>
 
+
+command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
+
 " Press i to enter insert mode, and ii to exit insert mode.
 :inoremap ii <Esc>
 :inoremap jk <Esc>
 :inoremap kj <Esc>
 :vnoremap jk <Esc>
 :vnoremap kj <Esc>
-
+ 
+:nnoremap <silent> <C-v> :Vb<CR>
 " open file in a text by placing text and gf
 nnoremap gf :vert winc f<cr>" copies filepath to clipboard by pressing yf
 :nnoremap <silent> yf :let @+=expand('%:p')<CR>
@@ -119,3 +125,5 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
+
+
